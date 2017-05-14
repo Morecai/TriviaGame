@@ -1,6 +1,7 @@
 $(document).ready(function() {
-	var rightAns = 0;
-    var wongAns = 0;
+    var rightAns = 0;
+    var wrongAns = 0;
+    var qIndex = 0;
     var selectedAnswers;
 
     //question
@@ -34,37 +35,33 @@ $(document).ready(function() {
         correctAnswer: 3
     }, ];
 
-    if (questionArray[0].answers[questionArray[0].correctAnswer] === "Wade Wilson") {
-        console.log("this is true!");
-    }
-    var i = 0
-    var answerIndex = questionArray[i].correctAnswer;
-    for (var i = 0; i < questionArray.lenght; i++) {
-        if (questionArray[0]) {
-            $("#ans0").text(questionArray[0].answers[0]);
-            $("#ans1").text(questionArray[0].answers[1]);
-            $("#ans2").text(questionArray[0].answers[2]);
-            $("#ans3").text(questionArray[0].answers[3]);
-        }
-        // questionArray[i][1] = "War Machine";
-        // console.log(questionArray[0].answers[0]);
-    }
-    // if (questionArray[1].answers[answerIndex] === "War Machine") {
+    // if (questionArray[0].answers[questionArray[0].correctAnswer] === "Wade Wilson") {
     //     console.log("this is true!");
-    // }
-    // //console.log(questionArray[0].answers[0]);
+    //}
+
+
+    var i = 0;
+    var answerIndex = questionArray[i].correctAnswer;
+    genQuestions();
+
 
 
     //Answers
-    $("button").on("click", ".answers", function(event){
-    	selectedAnswers = $(this);
-    		if (selectedAnswers === questionArray[i].answers[answerIndex]) {
-    			console.log("you guessed correctly!")
-    		}
-    		else (selectedAnswers !== questionArray[i].answers[answerIndex]) {
-    			console.log("Sorry you guessed incorrectly")
-    		}
-    })
+    $("#button").on(".click", ".answers", function(event) {
+        selectedAnswers = $(this);
+        if (selectedAnswers === questionArray[i].answers[answerIndex]) {
+            rightAns++;
+            console.log("you guessed correctly!");
+        } else if (selectedAnswers !== questionArray[i].answers[answerIndex]) {
+            wrongAns++;
+            console.log("Sorry you guessed incorrectly");
+        } else if (counter = 0) {
+            wrongAns++;
+            console.log("out of time")
+        }
+        clearInterval(interval);
+        qIndex++;
+    });
 
     //start game function
 
@@ -85,10 +82,18 @@ $(document).ready(function() {
 
     console.log(counter);
 
-    function newGame(){
-    	rightAns = 0;
-    	wongAns = 0;
-    	clearInterval(interval);
+    function newGame() {
+        rightAns = 0;
+        wrongAns = 0;
+        clearInterval(interval);
 
     }
-})
+
+    function genQuestions() {
+        $(".question").text(questionArray[0].question);
+        for (var i = 0; i < questionArray[qIndex].answers.length; i++) {
+            var id = "#ans" + i;
+            $(id).text(questionArray[qIndex].answers[i]);
+        }
+    }
+});
