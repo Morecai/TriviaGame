@@ -47,22 +47,24 @@ $(document).ready(function() {
 
 
     //Answers
-    $("#button").on(".click", ".answers", function(event) {
-        selectedAnswers = $(this);
+    $(".btn").on("click", function(event) {
+        selectedAnswers = $(this).text();
+        console.log(selectedAnswers);
         if (selectedAnswers === questionArray[i].answers[answerIndex]) {
             rightAns++;
+
             console.log("you guessed correctly!");
         } else if (selectedAnswers !== questionArray[i].answers[answerIndex]) {
             wrongAns++;
             console.log("Sorry you guessed incorrectly");
-        } else if (counter = 0) {
-            wrongAns++;
-            console.log("out of time")
+
+
         }
+        genQuestions();
         clearInterval(interval);
         qIndex++;
-    });
 
+    });
     //start game function
 
     //restart game function
@@ -74,6 +76,8 @@ $(document).ready(function() {
         counter--;
         $(".page-header").text(counter + " Seconds");
         if (counter == 0) {
+            wrongAns++;
+            genQuestions();
             clearInterval(interval);
             console.log(counter);
 
@@ -90,7 +94,7 @@ $(document).ready(function() {
     }
 
     function genQuestions() {
-        $(".question").text(questionArray[0].question);
+        $(".question").text(questionArray[qIndex].question);
         for (var i = 0; i < questionArray[qIndex].answers.length; i++) {
             var id = "#ans" + i;
             $(id).text(questionArray[qIndex].answers[i]);
